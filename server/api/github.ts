@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const GITHUB_API =
-    "https://api.github.com/repos/OgySatya/Kates-Entah/contents/data/users.json";
+    "https://api.github.com/repos/OgySatya/Skema-Buster/contents/data/users.json";
   const method = getMethod(event);
 
   const headers = {

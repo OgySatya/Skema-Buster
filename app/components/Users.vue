@@ -1,18 +1,44 @@
 <script setup lang="ts">
-import { useGithubJson } from "@/composable/Github";
-const {
-  list,
-  loading,
-  running,
-  createUser,
-  updateUserStatus,
-  deleteUser,
-  loadData,
-} = useGithubJson();
-// Load initial data
-onMounted(() => loadData());
+import { type Response } from "~/types/github";
+const { data: response } = await useFetch<Response>("/api/user-json");
+
+const users = computed(() => response.value?.data || []);
 const isSwitch = ref(false);
-console.log(list.value);
+
+const running = ref<number | null>(null);
+
+const updateUserStatus = async (nip: number, newStatus: boolean) => {
+  try {
+    running.value = nip;
+
+    // ⚡ optimistic update
+    const user = users.value.find((u) => u.nip === nip);
+    if (user) user.status = newStatus;
+
+    await $fetch("/api/user-json", {
+      method: "PUT",
+      body: {
+        nip,
+        status: newStatus,
+      },
+    });
+  } catch (err) {
+    // ❗ rollback if failed
+    const user = users.value.find((u) => u.nip === nip);
+    if (user) user.status = !newStatus;
+  } finally {
+    running.value = null;
+  }
+};
+const deleteUser = async (nip: number) => {
+  await $fetch("/api/user-json", {
+    method: "DELETE",
+    body: {
+      nip: nip,
+    },
+  });
+};
+console.log(users.value);
 </script>
 <template>
   <UPageGrid class="lg:grid-cols-4">
@@ -24,7 +50,7 @@ console.log(list.value);
       variant="soft"
     >
       <USeparator color="primary" type="solid" />
-      <div v-for="user in list" :key="user.nip" class="flex justify-between">
+      <div v-for="user in users" :key="user.nip" class="flex justify-between">
         <UUser
           :class="user.status ? '' : 'line-through'"
           :name="user.name"
@@ -32,14 +58,14 @@ console.log(list.value);
         />
         <div class="flex items-center gap-2">
           <UButton
-            @click="updateUserStatus(user.id, !user.status)"
+            @click="updateUserStatus(user.nip, !user.status)"
             variant="soft"
-            :loading="running === user.id"
+            :loading="running === user.nip"
             :color="user.status ? 'success' : 'warning'"
             >{{ user.status ? "Melu" : "Off" }}</UButton
           >
           <UButton
-            @click="deleteUser(user.id)"
+            @click="deleteUser(user.nip)"
             icon="i-lucide-x"
             size="md"
             color="error"
@@ -56,7 +82,7 @@ console.log(list.value);
       variant="soft"
     >
       <USeparator color="primary" type="solid" />
-      <div v-for="user in list" :key="user.nip" class="flex justify-between">
+      <div v-for="user in users" :key="user.nip" class="flex justify-between">
         <UUser :name="user.name" :description="`NIP: ${user.nip}`" />
         <div class="flex items-center gap-2">
           <USwitch v-model="isSwitch" />
@@ -76,7 +102,7 @@ console.log(list.value);
       variant="soft"
     >
       <USeparator color="primary" type="solid" />
-      <div v-for="user in list" :key="user.nip" class="flex justify-between">
+      <div v-for="user in users" :key="user.nip" class="flex justify-between">
         <UUser :name="user.name" :description="`NIP: ${user.nip}`" />
         <div class="flex items-center gap-2">
           <USwitch v-model="isSwitch" />
@@ -96,7 +122,7 @@ console.log(list.value);
       variant="soft"
     >
       <USeparator color="primary" type="solid" />
-      <div v-for="user in list" :key="user.nip" class="flex justify-between">
+      <div v-for="user in users" :key="user.nip" class="flex justify-between">
         <UUser :name="user.name" :description="`NIP: ${user.nip}`" />
         <div class="flex items-center gap-2">
           <USwitch v-model="isSwitch" />
