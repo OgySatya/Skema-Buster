@@ -38,7 +38,6 @@ const deleteUser = async (nip: number) => {
     },
   });
 };
-console.log(users.value);
 </script>
 <template>
   <UPageGrid class="lg:grid-cols-4">

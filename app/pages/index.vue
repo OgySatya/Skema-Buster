@@ -10,6 +10,7 @@ const interval = dayOfYear % 6;
 </script>
 
 <template>
+  <Nav />
   <StarBg />
   <!-- <AppModal /> -->
 

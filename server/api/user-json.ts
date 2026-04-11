@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const token = config.githubToken;
 
   const owner = "OgySatya";
-  const repo = "Skema-Buster";
+  const repo = "Seloaji";
   const path = "data/users.json";
 
   const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
@@ -87,14 +87,6 @@ export default defineEventHandler(async (event) => {
     // 1. find user index
     const index = data.findIndex((user: any) => user.nip === body.nip);
 
-    // 2. safety check
-    if (index === -1) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: "User not found",
-      });
-    }
-
     // 3. update ONLY that user
     data[index] = {
       ...data[index],
@@ -107,6 +99,25 @@ export default defineEventHandler(async (event) => {
     return {
       success: true,
       user: data[index],
+    };
+  }
+  // =========================
+  // 🔄 PATCH → RESET ALL USERS STATUS
+  // =========================
+  if (method === "PATCH") {
+    const { data, sha } = await getFile();
+
+    // set all status → false
+    const updated = data.map((user: any) => ({
+      ...user,
+      status: false,
+    }));
+
+    await updateFile(updated, sha, "reset all user status to false");
+
+    return {
+      success: true,
+      count: updated.length,
     };
   }
 

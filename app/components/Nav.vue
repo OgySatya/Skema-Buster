@@ -1,7 +1,20 @@
 <script setup lang="ts">
-import { useGithubJson } from "~/composable/Github";
 import { useModal } from "~/composable/useModal";
-const { deactivateAll } = useGithubJson();
+import { type Response } from "~/types/github";
+const { data: response } = await useFetch<Response>("/api/user-json");
+
+const users = ref(response.value?.data || []);
+
+const deactivateAll = async () => {
+  users.value = users.value.map((u) => ({
+    ...u,
+    status: false,
+  }));
+
+  await $fetch("/api/user-json", {
+    method: "PATCH",
+  });
+};
 const { open } = useModal();
 
 function openModal() {
