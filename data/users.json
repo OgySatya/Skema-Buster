@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Sumawan",
+    "nip": 197804142008011000,
+    "group": "a",
+    "mulai": 3,
+    "password": "197804142008011016",
+    "status": true
+  },
+  {
+    "name": "Bayu Pratomo",
+    "nip": 197004292007011000,
+    "group": "a",
+    "mulai": 3,
+    "password": "197004292007011010",
+    "status": false
+  },
+  {
+    "name": "Katno",
+    "nip": 196903202007011000,
+    "group": "a",
+    "mulai": 3,
+    "password": "196903202007011014",
+    "status": false
+  },
+  {
+    "name": "Didik Waluyo",
+    "nip": 197801082008011000,
+    "group": "a",
+    "mulai": 3,
+    "password": "197801082008011012",
+    "status": false
+  },
+  {
+    "name": "Eko SB",
+    "nip": 197111132008011000,
+    "group": "a",
+    "mulai": 3,
+    "password": "197111132008011005",
+    "status": false
+  },
+  {
+    "name": "Langgeng",
+    "nip": 197605202025211000,
+    "group": "a",
+    "mulai": 3,
+    "password": "197605202025211015",
+    "status": false
+  },
+  {
+    "name": "Ogy Satya",
+    "nip": 199106192023211000,
+    "group": "b",
+    "mulai": 5,
+    "password": "199106192023211005",
+    "status": false
+  },
+  {
+    "name": "DARYANTO",
+    "nip": 197304172007011000,
+    "group": "b",
+    "mulai": 5,
+    "password": "197304172007011019",
+    "status": false
+  },
+  {
+    "name": "SUWITO",
+    "nip": 197909182008011000,
+    "group": "b",
+    "mulai": 5,
+    "password": "197909182008011015",
+    "status": false
+  },
+  {
+    "name": "WULAN AFRIAL CATUR KUNCORO",
+    "nip": 198004102008011000,
+    "group": "b",
+    "mulai": 5,
+    "password": "198004102008011018",
+    "status": false
+  },
+  {
+    "name": "ISNA R. KHOIRI",
+    "nip": 197909302009011000,
+    "group": "b",
+    "mulai": 5,
+    "password": "197909302009011006",
+    "status": false
+  },
+  {
+    "name": "DIGDO SUBROTO",
+    "nip": 197204222009011000,
+    "group": "c",
+    "mulai": 1,
+    "password": "197204222009011005",
+    "status": false
+  },
+  {
+    "name": "SUKOCO",
+    "nip": 198105022008011000,
+    "group": "c",
+    "mulai": 1,
+    "password": "198105022008011022",
+    "status": false
+  },
+  {
+    "name": "MARSUDI",
+    "nip": 197005202008011000,
+    "group": "c",
+    "mulai": 1,
+    "password": "197005202008011021",
+    "status": false
+  },
+  {
+    "name": "SUPARDI",
+    "nip": 197207252007011000,
+    "group": "c",
+    "mulai": 1,
+    "password": "197207252007011017",
+    "status": false
+  }
+]
