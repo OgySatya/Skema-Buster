@@ -41,9 +41,18 @@ const updateJadwal = async () => {
   emit("success");
   loading.value = false;
 };
+const year = new Date().getFullYear();
 </script>
 
 <template>
+  <UAlert
+    class="font-bold"
+    color="info"
+    variant="subtle"
+    title="Penting BOSS!"
+    :description="`Sesuaikan Jadwal Mulai Kerja Tiap Regu di Awal Tahun pada Tanggal 01-Januari-${year}`"
+  />
+
   <UForm class="space-y-4 w-10/12 mx-auto" @submit="updateJadwal">
     <UFormField label="Regu A" name="email">
       <UInputMenu v-model="groupA" value-key="id" :items="awal" />
