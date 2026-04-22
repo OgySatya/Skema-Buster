@@ -1,93 +1,54 @@
-<!-- <script setup lang="ts">
-// import { useModal } from "@/composable/useModal";
-const { isOpen, modalData, close } = useModal();
+<script setup>
+defineProps({
+  isOpen: Boolean,
+  title: String,
+});
+const emit = defineEmits(["close"]);
 </script>
+
 <template>
-  <Transition name="fade">
+  <Transition
+    enter-active-class="duration-300 ease-out"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="duration-200 ease-in"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
     <div
       v-if="isOpen"
-      class="fixed inset-0 z-50 flex items-center justify-center"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <!-- Overlay -->
       <div
-        class="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        @click="close"
-      />
+        class="fixed inset-0 bg-gray-900/70 backdrop-blur-sm"
+        @click="emit('close')"
+      ></div>
 
-      <!-- Modal -->
-      <Transition name="scale">
-        <div
-          class="relative z-10 w-full max-w-lg mx-4 bg-white rounded-2xl shadow-xl p-6"
-        >
-          <!-- Header -->
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold">
-              {{ modalData?.title || "Modal" }}
-            </h2>
-
-            <button
-              @click="close"
-              class="text-gray-400 hover:text-gray-600 transition"
+      <UPageCard class="relative w-full max-w-sm mx-auto" variant="subtle">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold">{{ title }}</h2>
+          <button
+            @click="emit('close')"
+            class="text-gray-400 hover:text-gray-600"
+          >
+            <span class="sr-only">Close</span>
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              ✕
-            </button>
-          </div>
-
-          <!-- Content -->
-          <div class="text-gray-700">
-            <slot :data="modalData">
-              {{ modalData?.message }}
-            </slot>
-          </div>
-
-          <!-- Footer -->
-          <div class="mt-6 flex justify-end gap-2">
-            <button
-              @click="close"
-              class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
-            >
-              Cancel
-            </button>
-
-            <button
-              v-if="modalData?.onConfirm"
-              @click="
-                modalData.onConfirm();
-                close();
-              "
-              class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
-            >
-              Confirm
-            </button>
-          </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
-      </Transition>
+        <slot />
+      </UPageCard>
     </div>
   </Transition>
 </template>
-
-<style scoped>
-/* Fade backdrop */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Scale modal */
-.scale-enter-active,
-.scale-leave-active {
-  transition: all 0.2s ease;
-}
-.scale-enter-from {
-  opacity: 0;
-  transform: scale(0.95) translateY(10px);
-}
-.scale-leave-to {
-  opacity: 0;
-  transform: scale(0.95) translateY(10px);
-}
-</style> -->

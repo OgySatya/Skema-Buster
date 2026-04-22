@@ -1,8 +1,7 @@
 export interface User {
-  id: number;
   group: string;
   name: string;
-  nip: number;
+  nip: string;
   mulai: number;
   password: string;
   status: boolean;

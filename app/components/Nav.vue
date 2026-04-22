@@ -1,49 +1,38 @@
 <script setup lang="ts">
-import { useModal } from "~/composable/useModal";
 import { type Response } from "~/types/github";
-const { data: response } = await useFetch<Response>("/api/user-json");
-
-const users = ref(response.value?.data || []);
 
 const deactivateAll = async () => {
-  users.value = users.value.map((u) => ({
-    ...u,
-    status: false,
-  }));
-
   await $fetch("/api/user-json", {
     method: "PATCH",
-  });
-};
-const { open } = useModal();
-
-function openModal() {
-  open({
-    title: "Delete Item",
-    message: "Are you sure you want to delete this?",
-    onConfirm: () => {
-      console.log("Deleted!");
+    body: {
+      action: "tiarap",
     },
   });
-}
+};
+const isModalOpen = ref(false);
+const groupModal = ref(false);
+
+const handleUserCreated = () => {
+  isModalOpen.value = false;
+};
 </script>
 <template>
   <UHeader>
-    <template #left>
+    <template #left class="">
       <NuxtLink to="/">
-        <AppLogo class="w-auto h-6 shrink-0" />
+        <AppLogo class="w-auto h-6 shrink-0 hidden md:flex" />
       </NuxtLink>
     </template>
 
     <template #right>
       <UButton
-        @click="openModal()"
-        icon="i-lucide-trash-2"
+        @click="isModalOpen = true"
+        icon="i-lucide-plus"
         size="md"
-        color="error"
+        color="success"
         variant="soft"
       >
-        Bersihkan</UButton
+        Pasukan</UButton
       >
       <UButton
         @click="deactivateAll()"
@@ -54,7 +43,34 @@ function openModal() {
       >
         Tiarap</UButton
       >
+      <UButton
+        @click="groupModal = true"
+        icon="i-lucide-calendar"
+        size="md"
+        variant="soft"
+        color="neutral"
+      >
+        Jadwal</UButton
+      >
       <UColorModeButton />
     </template>
   </UHeader>
+  <div>
+    <AppModal
+      :is-open="isModalOpen"
+      title="Tambah Pasukan Kates Entah"
+      @close="isModalOpen = false"
+    >
+      <CreateUser @success="handleUserCreated" />
+    </AppModal>
+  </div>
+  <div>
+    <AppModal
+      :is-open="groupModal"
+      title="Atur Jadwal Shift Regu"
+      @close="groupModal = false"
+    >
+      <GroupSetting @success="groupModal = false" />
+    </AppModal>
+  </div>
 </template>

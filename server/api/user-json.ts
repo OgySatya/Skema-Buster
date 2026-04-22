@@ -1,4 +1,3 @@
-import { type User } from "~/types/user";
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const token = config.githubToken;
@@ -107,18 +106,47 @@ export default defineEventHandler(async (event) => {
   if (method === "PATCH") {
     const { data, sha } = await getFile();
 
-    // set all status → false
-    const updated = data.map((user: any) => ({
-      ...user,
-      status: false,
-    }));
+    if (body.action === "tiarap") {
+      const updated = data.map((user: any) => ({
+        ...user,
+        status: false,
+      }));
 
-    await updateFile(updated, sha, "reset all user status to false");
+      await updateFile(updated, sha, "reset all user status to false");
 
-    return {
-      success: true,
-      count: updated.length,
-    };
+      return {
+        success: true,
+        count: updated.length,
+      };
+    }
+  }
+
+  if (method === "PATCH") {
+    const body = await readBody(event);
+    const { data, sha } = await getFile();
+
+    // ✅ batch update
+    if (body.action === "batch-update-mulai") {
+      const updated = data.map((user: any) => {
+        const match = body.updates.find((u: any) => u.group === user.group);
+
+        if (match) {
+          return {
+            ...user,
+            mulai: match.mulai,
+          };
+        }
+
+        return user;
+      });
+
+      await updateFile(updated, sha, "batch update mulai");
+
+      return {
+        success: true,
+        updated: body.updates.length,
+      };
+    }
   }
 
   // =========================

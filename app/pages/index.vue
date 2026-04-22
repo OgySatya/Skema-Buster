@@ -12,9 +12,8 @@ const interval = dayOfYear % 6;
 <template>
   <Nav />
   <StarBg />
-  <!-- <AppModal /> -->
 
-  <div class="mb-8">
+  <div class="mb-8 mx-auto w-full">
     <h1 class="text-3xl font-bold text-center mt-8 font-serif">
       Pasukan Khusus Seloaji
       <span class="text-primary font-thin">Kates Entah</span>
