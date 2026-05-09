@@ -15,8 +15,11 @@ const interval = dayOfYear % 6;
 
   <div class="mb-8 mx-auto w-full">
     <h1 class="text-3xl font-bold text-center mt-8 font-serif">
-      Pasukan Khusus Seloaji
-      <span class="text-primary font-thin">Kates Entah</span>
+      Pasukan Khusus
+      <span class="text-primary font-bold">Kates Entah</span>
+    </h1>
+    <h1 class="text-4xl font-bold text-center mt-4 font-serif bg-clip-text text-warning">
+      Anti Sambat !
     </h1>
     <p class="text-center mt-4 text-gray-600">
       {{

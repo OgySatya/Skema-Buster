@@ -71,6 +71,7 @@ const userDeleted = () => {
           <USwitch
             size="xl"
             :loading="running === user.nip"
+            :disabled="running!== null"
             loading-icon="i-lucide-loader"
             @click="updateUserStatus(user.nip, !user.status)"
             v-model="user.status"

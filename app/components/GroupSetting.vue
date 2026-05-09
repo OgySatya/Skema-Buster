@@ -13,13 +13,13 @@ const groupB = ref(users.value.filter((u: any) => u.group === "b")[0]?.mulai);
 const groupC = ref(users.value.filter((u: any) => u.group === "c")[0]?.mulai);
 
 const awal = ref<InputMenuItem[]>([
-  { label: "Pagi Pertama", id: 1 },
-  { label: "Pagi Kedua", id: 2 },
-  { label: "Malam Pertama", id: 3 },
-  { label: "Malam Kedua", id: 4 },
+  { label: "Esuk Pertama", id: 1 },
+  { label: "Esuk Kedua", id: 2 },
+  { label: "Bengi Pertama", id: 3 },
+  { label: "Bengi Kedua", id: 4 },
   { label: "Lepas Jaga", id: 5 },
   { label: "Libur", id: 0 },
-  { label: "Admin", id: 6 },
+
 ]);
 const loading = ref(false);
 const updateJadwal = async () => {

@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { type Response } from "~/types/github";
 
+const running = ref(false);
 const deactivateAll = async () => {
+  running.value = true;
   await $fetch("/api/user-json", {
     method: "PATCH",
     body: {
       action: "tiarap",
     },
   });
+  running.value = false;
 };
 const isModalOpen = ref(false);
 const groupModal = ref(false);
@@ -36,6 +38,7 @@ const handleUserCreated = () => {
       >
       <UButton
         @click="deactivateAll()"
+        :loading="running"
         icon="i-lucide-siren"
         size="md"
         color="warning"
